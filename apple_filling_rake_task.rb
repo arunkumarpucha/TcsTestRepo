@@ -8,17 +8,17 @@ namespace :apple_filling_rake_task do
       
             all_baskets.each do |basket|
               if filled_total_count < target_fill_count
-								is_eligible = check_basket_eligibility(basket)
-								if is_eligible
-									fill_with_apples(basket,count,variety)
-									filled_total_count += basket.apples.count
-									count = count-basket.apples.count
-								else
-									puts "basket is not eligible"
-									next
-								end
-							else
-								puts "All Baskets Are Full"
+		is_eligible = check_basket_eligibility(basket)
+		if is_eligible
+			fill_with_apples(basket,count,variety)
+			filled_total_count += basket.apples.count
+			count = count-basket.apples.count
+		else
+			puts "basket is not eligible"
+			next
+		end
+	      else
+	        puts "All Baskets Are Full"
               end
             end
     end
@@ -32,8 +32,8 @@ namespace :apple_filling_rake_task do
                 basket.apples.create(variety: variety)
                 filling_count+=1
             end
-						new_fill_rate = calculate_fill_rate(filling_count,basket_capacity)
-						basket.update(fill_rate: new_fill_rate)
+	 new_fill_rate = calculate_fill_rate(filling_count,basket_capacity)
+	 basket.update(fill_rate: new_fill_rate)
         else
             basket_capacity = basket.apples.count - count
             filling_count = 0
@@ -41,8 +41,8 @@ namespace :apple_filling_rake_task do
                 basket.apples.create(variety: variety)
                 filling_count+=1
             end
-						new_fill_rate = calculate_fill_rate(filling_count,basket_capacity)
-						basket.update(fill_rate: new_fill_rate)
+	 new_fill_rate = calculate_fill_rate(filling_count,basket_capacity)
+	 basket.update(fill_rate: new_fill_rate)
         end
 			
     end
@@ -51,7 +51,7 @@ namespace :apple_filling_rake_task do
         basket.apples.count == 0 || basket.apples.where(variety: variety).count > 1
     end
     
-		def calculate_fill_rate(filling_count,basket_capacity)
-			(filling_count/basket_capacity)*100
+     def calculate_fill_rate(filling_count,basket_capacity)
+	(filling_count/basket_capacity)*100
     end
 end
